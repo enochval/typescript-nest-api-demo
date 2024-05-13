@@ -1,29 +1,49 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { Product } from './interfaces/product.interface';
+import { InjectRepository } from '@nestjs/typeorm';
+import { ProductEntity } from './product.entity';
+import { Repository } from 'typeorm';
+import { CreateProductDTO } from './dto/create-product.dto';
+import { UpdateProductDTO } from './dto/update-product.dto';
 
 @Injectable()
 export class ProductsService {
-    products: Product[] = []
+    constructor(
+        @InjectRepository(ProductEntity)
+        private readonly productRepository: Repository<ProductEntity>
+    ) {}
 
-    create(product: Product): Product[]  {
-        this.products.push(product)
-        return this.products
+    async create(product: CreateProductDTO): Promise<Product>  {
+        return await this.productRepository.save(product)
     }
 
-    all(): Product[] {
-        return this.products
+    async all(): Promise<Product[]> {
+        return await this.productRepository.find()
     }
 
-    findOne(id: string): Product {
-        return this.products.find(p => p.id === id)
+    async findOne(id: string): Promise<Product> {
+        const product = await this.productRepository.findOneBy({id})
+        if (!product) {
+            throw new NotFoundException("Could not find any product")
+        }
+        return product;
     }
 
-    delete(id: string): Product[] {
-        this.products.splice(
-            this.products.findIndex(p => p.id === id),
-            1
-        )
+    async delete(id: string): Promise<void> {
+        const product = this.productRepository.findOneBy({id})
+        if (!product) {
+            throw new NotFoundException("Could not find any product")
+        }
+        await this.productRepository.delete(id)
+    }
 
-        return this.products
+    async update(id: string, updatedRecord: UpdateProductDTO): Promise<Product> {
+        const product = await this.productRepository.findOneBy({id})
+        if (!product) {
+            throw new NotFoundException('Could not find any product.')
+        }
+
+        await this.productRepository.merge(product, updatedRecord)
+        return await this.productRepository.save(product)
     }
 }
