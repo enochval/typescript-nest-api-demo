@@ -1,4 +1,6 @@
-import { IsInt, IsNotEmpty, IsNumber, IsNumberString, IsString, IsUUID } from "class-validator"
+import { IsInt, IsNotEmpty, IsNumberString, IsObject, IsOptional, IsString, ValidateNested } from "class-validator"
+import { CreateProductDetailsDTO } from "./create-product-details.dto"
+import { Type } from "class-transformer"
 
 export class CreateProductDTO {
     @IsNotEmpty()
@@ -12,4 +14,8 @@ export class CreateProductDTO {
     @IsNotEmpty()
     @IsNumberString()
     readonly price: number
+
+    @ValidateNested()
+    @Type(() => CreateProductDetailsDTO)
+    readonly productDetails: CreateProductDetailsDTO
 }

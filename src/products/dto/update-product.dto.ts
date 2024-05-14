@@ -1,16 +1,22 @@
-import { IsInt, IsNumberString, IsOptional, IsString } from "class-validator"
+import { Type } from "class-transformer"
+import { IsInt, IsNumberString, IsOptional, IsString, ValidateNested } from "class-validator"
+import { UpdateProductDetailsDTO } from "./update-product-details.dto"
 
 export class UpdateProductDTO {
 
     @IsOptional()
     @IsString()
-    name: string
+    readonly name: string
 
     @IsOptional()
     @IsInt()
-    qty: number
+    readonly qty: number
 
     @IsOptional()
     @IsNumberString()
-    price: number
+    readonly price: number
+
+    @ValidateNested()
+    @Type(() => UpdateProductDetailsDTO)
+    readonly productDetails: UpdateProductDetailsDTO
 }
