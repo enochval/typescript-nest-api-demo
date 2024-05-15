@@ -17,13 +17,7 @@ export class ProductsService {
     ) {}
 
     async create(productDTO: CreateProductDTO): Promise<Product>  {
-        const { productDetails, ...rest } = productDTO;
-        const createdProduct = await this.productRepository.save(rest)
-        const { product, ...createdProductDetails } = await this.productDetailsRepository.save(
-            { ...productDetails, product: createdProduct }
-        )
-
-        return { ...createdProduct, productDetails: createdProductDetails }
+        return await this.productRepository.save(productDTO)
     }
 
     async all(): Promise<Product[]> {
@@ -48,8 +42,10 @@ export class ProductsService {
             throw new NotFoundException("Could not find any product")
         }
 
-        await this.productDetailsRepository.delete(product.productDetails.id)
-        await this.productRepository.delete(id)
+        await Promise.all([
+            await this.productDetailsRepository.delete(product.productDetails.id),
+            await this.productRepository.delete(id)
+        ])
 
         return { msg: `Product with ID ${id} and product details ID ${product.productDetails.id} is deleted.`}
     }
@@ -62,13 +58,7 @@ export class ProductsService {
             throw new NotFoundException('Could not find any product.')
         }
 
-        const { productDetails, ...rest } = updatedRecord
-        await this.productRepository.merge(findProduct, rest)
-        const updatedProduct = await this.productRepository.save(findProduct)
-
-        await this.productDetailsRepository.merge(findProduct.productDetails, productDetails)
-        const {product, ...updatedProductdetails} = await this.productDetailsRepository.save(findProduct.productDetails)
-
-        return { ...updatedProduct, productDetails: updatedProductdetails }
+        await this.productRepository.merge(findProduct, updatedRecord)
+        return await this.productRepository.save(findProduct)
     }
 }
