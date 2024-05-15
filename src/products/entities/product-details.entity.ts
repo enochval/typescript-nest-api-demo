@@ -22,7 +22,9 @@ export class ProductDetailsEntity {
     @Column({ length: 45 })
     origin: string
 
-    @OneToOne(() => ProductEntity)
+    @OneToOne(type => ProductEntity, product => product.productDetails, {
+        onDelete: "CASCADE"
+    })
     @JoinColumn({ name: "product_id"})
     product: ProductEntity
 }

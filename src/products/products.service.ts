@@ -42,10 +42,7 @@ export class ProductsService {
             throw new NotFoundException("Could not find any product")
         }
 
-        await Promise.all([
-            await this.productDetailsRepository.delete(product.productDetails.id),
-            await this.productRepository.delete(id)
-        ])
+        await this.productRepository.delete(id)
 
         return { msg: `Product with ID ${id} and product details ID ${product.productDetails.id} is deleted.`}
     }

@@ -16,7 +16,7 @@ export class ProductEntity {
     @Column({ type: 'float' })
     price: number
 
-    @OneToOne(() => ProductDetailsEntity, (productDetails) => productDetails.product, {
+    @OneToOne(type => ProductDetailsEntity, productDetails => productDetails.product, {
         cascade: ["insert", "update"],
         onDelete: "CASCADE"
     })
