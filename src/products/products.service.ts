@@ -5,15 +5,12 @@ import { ProductEntity } from './entities/product.entity';
 import { Repository } from 'typeorm';
 import { CreateProductDTO } from './dto/create-product.dto';
 import { UpdateProductDTO } from './dto/update-product.dto';
-import { ProductDetailsEntity } from './entities/product-details.entity';
 
 @Injectable()
 export class ProductsService {
     constructor(
         @InjectRepository(ProductEntity)
-        private readonly productRepository: Repository<ProductEntity>,
-        @InjectRepository(ProductDetailsEntity)
-        private readonly productDetailsRepository: Repository<ProductDetailsEntity>
+        private readonly productRepository: Repository<ProductEntity>
     ) {}
 
     async create(productDTO: CreateProductDTO): Promise<Product>  {
