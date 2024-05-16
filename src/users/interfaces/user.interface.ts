@@ -1,4 +1,4 @@
-import { Photo } from "src/photos/interfaces/photo"
+import { Photo } from "src/photos/interfaces/photo.interface"
 
 export class User {
 

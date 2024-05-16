@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { PhotoEntity } from './entities/photo.entity';
 import { Repository } from 'typeorm';
 import { UpdatePhotoDTO } from './dto/update-photo.dto';
-import { Photo } from './interfaces/photo';
+import { Photo } from './interfaces/photo.interface';
 
 @Injectable()
 export class PhotosService {

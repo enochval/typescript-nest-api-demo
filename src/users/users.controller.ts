@@ -1,7 +1,7 @@
 import { Body, Controller, Delete, Get, Param, ParseUUIDPipe, Post, Put, UseFilters, UseInterceptors } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDTO } from './dto/create-user.dto';
-import { User } from './interfaces/user';
+import { User } from './interfaces/user.interface';
 import { HttpExceptionFilter } from 'src/common/filters/http-exception.filter';
 import { UpdateUserDTO } from './dto/update-user.dto';
 import { TransformInterceptor } from 'src/common/interceptors/transform/transform.interceptor';

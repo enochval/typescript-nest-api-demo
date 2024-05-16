@@ -2,7 +2,7 @@ import { Body, Controller, Delete, Get, Param, ParseUUIDPipe, Put, UseFilters, U
 import { HttpExceptionFilter } from 'src/common/filters/http-exception.filter';
 import { TransformInterceptor } from 'src/common/interceptors/transform/transform.interceptor';
 import { PhotosService } from './photos.service';
-import { Photo } from './interfaces/photo';
+import { Photo } from './interfaces/photo.interface';
 import { UpdatePhotoDTO } from './dto/update-photo.dto';
 
 @Controller('photos')

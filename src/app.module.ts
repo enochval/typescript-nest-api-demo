@@ -8,6 +8,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { DataSource } from 'typeorm';
 import { UsersModule } from './users/users.module';
 import { PhotosModule } from './photos/photos.module';
+import { QuizModule } from './quiz/quiz.module';
 
 @Module({
   imports: [
@@ -23,7 +24,8 @@ import { PhotosModule } from './photos/photos.module';
     }),
     ProductsModule,
     UsersModule,
-    PhotosModule
+    PhotosModule,
+    QuizModule
   ],
   controllers: [AppController],
   providers: [AppService],
