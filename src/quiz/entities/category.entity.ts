@@ -1,4 +1,4 @@
-import { Column, Entity, JoinColumn, JoinTable, ManyToMany, PrimaryGeneratedColumn } from "typeorm"
+import { Column, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn } from "typeorm"
 import { QuestionEntity } from "./question.entity"
 
 @Entity({ name: 'categories' })
